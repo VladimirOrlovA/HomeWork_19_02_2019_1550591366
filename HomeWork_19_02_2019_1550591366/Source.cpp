@@ -40,7 +40,7 @@ void selectionSort(int *arr, int n)
 			}
 }
 
-void seachArray(int arr[], int n, int key)
+void seachArray(int *arr, int n, int key)
 {
 	int sumMore = 0;
 
@@ -58,6 +58,26 @@ void seachArray(int arr[], int n, int key)
 		cout << "\n В массиве кол-во элемнтов со значением < " << key << " больше.";
 }
 
+void sumArrayPtoK(int *arr, int n, int p, int k)
+{
+	int pind = 0;
+	int kind = 0;
+	int sum = 0;
+	
+	for (int *c = arr; c != arr + n; c++)
+	{
+		if (*c == p) pind = c-arr;
+		if (*c == k) kind = c-arr;
+	}
+	
+	kind++; // из условия понял что сумма до элемента K значит не включая его, если ошибся, то просто стереть этот стейтмент  
+
+	for (kind; kind != pind; kind++) 
+		sum += arr[kind];
+
+	cout << "Сумма элементов между элементами со значениями K и P = " << sum << endl;
+}
+
 void Task1()
 {
 	/*11. Используя указатели в упорядоченном по возрастанию массиве выяснить, что больше элементов со значением > Р
@@ -65,7 +85,7 @@ void Task1()
 
 
 	SetConsoleTextAttribute(hConsole, 10);
-	cout << "\n--------------------------------------------------------------------------\n\nTask2\n\n";
+	cout << "\n--------------------------------------------------------------------------\n\nTask1\n\n";
 	SetConsoleTextAttribute(hConsole, 7);
 
 	int n;
@@ -78,7 +98,6 @@ void Task1()
 	cin >> key;
 
 	fillArray(arr, n);
-	printArray(arr, n);
 	selectionSort(arr, n);
 	printArray(arr, n);
 	seachArray(arr, n, key);
@@ -89,9 +108,35 @@ void Task1()
 
 void Task2()
 {
+	/*12. Используя указатели в упорядоченном по возрастанию массиве подсчитать сумму элементов, 
+		расположенных за элементом со значением Р и до элемента со значением К(Р > К).*/
 	
 
 	
+	SetConsoleTextAttribute(hConsole, 10);
+	cout << "\n--------------------------------------------------------------------------\n\nTask2\n\n";
+	SetConsoleTextAttribute(hConsole, 7);
+
+	int n = 0, p = 0, k=INT_MAX;
+	cout << "Введите размер массива -> ";
+	cin >> n;
+	int *arr = new int[n];
+
+	fillArray(arr, n);
+	selectionSort(arr, n);
+	printArray(arr, n);
+
+	cout << "Введите значение P \t -> ";
+	cin >> p;
+
+	while (k >= p)
+	{
+		cout << "Введите значение K < P \t -> ";
+		cin >> k;
+		if (k >= p) cout << "\nВведенное значение K не удовлетворяет условию. Попробуйте еще раз...\n";
+	}
+
+	sumArrayPtoK(arr, n, p, k);
 
 
 }
